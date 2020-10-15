@@ -313,7 +313,7 @@ public class MainUI extends JFrame {
 
 		try
 		{
-			final String API_KEY = "";
+			final String API_KEY = "∫ª¿Œ API";
 
 			String url = String.format("http://www.kobis.or.kr/kobisopenapi/webservice/rest/boxoffice/search%s"
 					+ "BoxOfficeList.xml?key=%s&targetDt=%d%s", type, API_KEY, date, week);
