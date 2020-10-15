@@ -91,7 +91,7 @@ public class MainUI extends JFrame {
 		// 코로나 api 주소를 요청한다.
 		// 본인 api로 사용
 		final String API_KEY = "0%2BUirk94OGKR5kIwDVIefKzRGUm%2B5Xu%2Bw523JAVD4BMh1h9VFPU8AkXDjHSXoBCxoq9aoislKFCQxIUlhznUFg%3D%3D";
-		// 예제에서 반드시 입력할 url parameter 로 검색 기간을 정할 수 있음.
+		// 반드시 입력할 url parameter 로 검색 기간을 정할 수 있음.
 		final String startDate = "20200310";
 		final String endDate = "20200509";
 		// 나머지 page 정보나 한번에 보여줄 정보는 고정해서 사용하고, 필요시 변경 가능.
