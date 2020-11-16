@@ -5,9 +5,9 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 public class HttpModule {
-	private static OkHttpClient client = new OkHttpClient();
+	private OkHttpClient client = new OkHttpClient();
 
-	public static String requestGet(String url) {
+	String requestGet(String url) {
 		Request request = new Request.Builder()
 				.url(url)
 				.build();
