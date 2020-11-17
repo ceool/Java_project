@@ -3,22 +3,31 @@ package com.hallym.SP_Project;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 
 public class HttpModule {
 	private OkHttpClient client = new OkHttpClient();
-
+	private Request request;
+	private String result = "";
+	
 	String requestGet(String url) {
-		Request request = new Request.Builder()
+		request = new Request.Builder()
 				.url(url)
 				.build();
-		String result = "";
 
 		try {
 			Response response = client.newCall(request).execute();
-			result = response.body().string();
+			ResponseBody reponseBody = response.body();
+            assert reponseBody != null;
+            
+			result = reponseBody.string();
+			response.close();
+			reponseBody.close();
+			request = null;
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
+
 		return result;
 	}
 }

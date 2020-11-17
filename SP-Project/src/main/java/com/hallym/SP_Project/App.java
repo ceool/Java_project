@@ -20,31 +20,36 @@ public class App {
 		int closing_price; //매도 가격
 		int pre_open = 0; //이전 매수 가격
 		int pre_close = 0; // 이전 매도 가격
-		int status; // status
 
 		//매수 매도 tmp값들
 		float bittmp, buytmp;
 		int low=0, max=0, tmp;
 
+		String result;
 		String url = String.format("https://api.bithumb.com/public/ticker/BTC_KRW");
-
+		//JsonObject jsonResult;
+		JSONObject jsonResult;
+		
 		HttpModule module = new HttpModule();
+		
 		while(true)
 		{
 			//url 불러오기
-			String result = module.requestGet(url);
-
+			result = module.requestGet(url);
+			
 			if(!result.isEmpty()) 
 			{
 
-				JSONObject jsonResult = new JSONObject(result);
-				//서버 오류코드 확인: status가 0000이면 정상
-				status = Integer.parseInt((String) jsonResult.get("status"));
-				if (status == 0000)
+				//jsonResult = new Gson().fromJson(result, JsonObject.class);
+				jsonResult = new JSONObject(result);
+				
+				//서버 오류코드 확인: 0000이면 정상
+				if (Integer.parseInt((String) jsonResult.get("status")) == 0000)
 				{
+					//opening_price = jsonResult.getAsJsonObject("data").get("opening_price").getAsInt();
+					//closing_price = jsonResult.getAsJsonObject("data").get("closing_price").getAsInt();
 					opening_price = Integer.parseInt((String) jsonResult.getJSONObject("data").get("opening_price"));
 					closing_price = Integer.parseInt((String) jsonResult.getJSONObject("data").get("closing_price"));
-
 					//System.out.println(opening_price + ", " + closing_price);
 
 
@@ -124,11 +129,11 @@ public class App {
 							//소지금과 비트코인 돈 정리
 							tmp = (int) (low*bittmp);
 							money -= tmp;
-							bitcoin += bittmp;
+							bitcoin = (float) (Math.round((bitcoin + bittmp) * 1000) / 1000.0);
 
 							//매수했던 가격 총합과 횟수
 							buytotal += tmp;
-							buyCnt += bittmp;
+							buyCnt = (float) (Math.round((buyCnt + bittmp) * 1000) / 1000.0);
 							buyAvg = buytotal / buyCnt;
 
 							System.out.println("--------------------- 매수 ---------------------");
@@ -173,7 +178,7 @@ public class App {
 
 							//소지금과 비트코인 돈 정리
 							money += tmp;
-							bitcoin -= bittmp;
+							bitcoin = (float) (Math.round((bitcoin - bittmp) * 1000) / 1000.0);
 							System.out.println("--------------------- 매도 ---------------------");
 							System.out.println("판매가격: " + max + ", 판매 비트코인 수: " + bittmp + ", 총 판매금액: " + tmp);
 							System.out.println("소지금: " + money + ", 총 소유 비트코인 수: " + bitcoin);
@@ -188,7 +193,7 @@ public class App {
 				}//if(status)
 				//빗썸 API가 현재 오류로 작동되지 않을 경우
 				else
-					System.out.println("오류코드: " + status + ", 서버 오류로 일시적으로 불러올 수 없습니다.");
+					System.out.println("오류코드: " + jsonResult.get("status") + ", 서버 오류로 일시적으로 불러올 수 없습니다.");
 			}//is.empty
 			//주소로부터 정보를 얻지 못했다면
 			else {
