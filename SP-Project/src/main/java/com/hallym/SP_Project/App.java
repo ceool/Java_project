@@ -4,7 +4,21 @@ import org.json.JSONObject;
 
 public class App {
 	public static void main(String[] args) {
-
+		RecordLog rl = new RecordLog(); //로그 객체
+		String path = "Log";
+		
+		LED led = new LED(2); // LED 객체
+		led.start();
+		
+		try {
+			led.join();
+		} catch (InterruptedException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		//매도 매수의 격차 1*priDif
+		float priDif = (float) 0.005;
 		int money = 100000000; // 초기자금 1억
 		float bitcoin = 0; // 초기 비트코인 0개
 
@@ -18,6 +32,7 @@ public class App {
 
 		int opening_price; //매수 가격
 		int closing_price; //매도 가격
+
 		int pre_open = 0; //이전 매수 가격
 		int pre_close = 0; // 이전 매도 가격
 
@@ -29,20 +44,20 @@ public class App {
 		String url = String.format("https://api.bithumb.com/public/ticker/BTC_KRW");
 		//JsonObject jsonResult;
 		JSONObject jsonResult;
-		
+
 		HttpModule module = new HttpModule();
-		
+
 		while(true)
 		{
 			//url 불러오기
 			result = module.requestGet(url);
-			
+
 			if(!result.isEmpty()) 
 			{
 
 				//jsonResult = new Gson().fromJson(result, JsonObject.class);
 				jsonResult = new JSONObject(result);
-				
+
 				//서버 오류코드 확인: 0000이면 정상
 				if (Integer.parseInt((String) jsonResult.get("status")) == 0000)
 				{
@@ -53,7 +68,7 @@ public class App {
 					//System.out.println(opening_price + ", " + closing_price);
 
 
-					if(num >= 900)
+					if(num >= 777)
 					{
 						if(chNum != 0)
 						{
@@ -63,7 +78,7 @@ public class App {
 							total = 0;
 							low = 0;
 							max = 0;
-							System.out.println("3분동안의 평균: " + avg);
+							System.out.println("777번 불러온 값의 평균: " + avg);
 						}
 					}
 					num++;
@@ -98,7 +113,7 @@ public class App {
 					//매수
 					if(avg != 0 && money >= 300000)
 					{					
-						if (avg * 0.995 >= pre_close || avg * 0.995 >= pre_open)
+						if (avg * (1-priDif) >= pre_close || avg * (1-priDif) >= pre_open)
 						{
 							if(pre_close == low || pre_open == low)
 							{
@@ -107,7 +122,7 @@ public class App {
 								else
 									tmp = pre_close;
 
-								if(tmp == low || avg * 0.995 < tmp)
+								if(tmp == low || avg * (1-priDif) < tmp)
 								{
 									try {
 										Thread.sleep(100);
@@ -141,13 +156,17 @@ public class App {
 							System.out.println("소지금: " + money + ", 총 소유 비트코인 수: " + bitcoin);
 							System.out.printf("구매 평균 가격: %.1f\n", buyAvg);
 
+							rl.buyLog(path, money, bitcoin, low, bittmp, tmp, buyAvg);
+							
+							led = new LED(3);
+							led.start();							
 						}
 					}
 
 					//매도
 					if(buyAvg != 0 && bitcoin >= 0.01)
 					{						
-						if (buyAvg * 1.005 <= pre_close || buyAvg * 1.005 <= pre_open)
+						if (buyAvg * (1+priDif) <= pre_close || buyAvg * (1+priDif) <= pre_open)
 						{
 							if(pre_close == max || pre_open == max)
 							{
@@ -156,7 +175,7 @@ public class App {
 								else
 									tmp = pre_close;
 
-								if(tmp == max || buyAvg * 1.005 > tmp)
+								if(tmp == max || buyAvg * (1+priDif) > tmp)
 								{
 									try {
 										Thread.sleep(100);
@@ -183,6 +202,11 @@ public class App {
 							System.out.println("판매가격: " + max + ", 판매 비트코인 수: " + bittmp + ", 총 판매금액: " + tmp);
 							System.out.println("소지금: " + money + ", 총 소유 비트코인 수: " + bitcoin);
 
+							rl.sellLog(path, money, bitcoin, low, bittmp, tmp);
+							
+							led = new LED(1);
+							led.start();
+							
 							if(bitcoin < 0.01)
 							{
 								buytotal = 0;
