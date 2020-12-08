@@ -17,7 +17,7 @@ public class App {
 			e1.printStackTrace();
 		}
 		
-		//매도 매수의 격차 1*priDif
+		//매수의 격차 1*priDif
 		float priDif = (float) 0.003;
 		int money = 100000000; // 초기자금 1억
 		float bitcoin = 0; // 초기 비트코인 0개
@@ -166,7 +166,7 @@ public class App {
 					//매도
 					if(buyAvg != 0 && bitcoin >= 0.01)
 					{						
-						if (buyAvg * (1+priDif) <= pre_close || buyAvg * (1+priDif) <= pre_open)
+						if (buyAvg * 1.006 <= pre_close || buyAvg * 1.006 <= pre_open)
 						{
 							if(pre_close == max || pre_open == max)
 							{
@@ -175,7 +175,7 @@ public class App {
 								else
 									tmp = pre_close;
 
-								if(tmp == max || buyAvg * (1+priDif) > tmp)
+								if(tmp == max || buyAvg * 1.006 > tmp)
 								{
 									try {
 										Thread.sleep(100);
