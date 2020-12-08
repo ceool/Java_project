@@ -18,7 +18,7 @@ public class App {
 		}
 		
 		//매도 매수의 격차 1*priDif
-		float priDif = (float) 0.005;
+		float priDif = (float) 0.003;
 		int money = 100000000; // 초기자금 1억
 		float bitcoin = 0; // 초기 비트코인 0개
 
