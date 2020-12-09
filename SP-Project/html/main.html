@@ -123,10 +123,10 @@
          var val = String(year) + String(month) + String(date);
 
          price.innerHTML = '<iframe src="./Log/' + val + '_present.txt" style="border:0; height: 25px;" scrolling="no"></iframe>';
-         deposit.innerHTML = '<iframe src="/home/pi/Log/' + val + '_deposit.log" style="border:0; height: 22px;" scrolling="no"></iframe>';
-         coin.innerHTML = '<iframe id="coin" src="/home/pi/Log/' + val + '_hold.log" style="border:0; height: 22px;" scrolling="no"></iframe>';
-         buying.innerHTML = '<iframe class="list" src="/home/pi/Log/' + val + '_buying.log" style="background-color:AliceBlue;"></iframe>';
-         sell.innerHTML = '<iframe class="list" src="/home/pi/Log/' + val + '_sell.log" style="background-color: mistyrose;"></iframe>';
+         deposit.innerHTML = '<iframe src="./Log/' + val + '_deposit.txt" style="border:0; height: 25px;" scrolling="no"></iframe>';
+         coin.innerHTML = '<iframe id="coin" src="./Log/' + val + '_hold.txt" style="border:0; height: 25px;" scrolling="no"></iframe>';
+         buying.innerHTML = '<iframe class="list" src="./Log/' + val + '_buying.txt" style="background-color:AliceBlue;"></iframe>';
+         sell.innerHTML = '<iframe class="list" src="./Log/' + val + '_sell.txt" style="background-color: mistyrose;"></iframe>';
          time.innerHTML = today;
       }
    </script>
