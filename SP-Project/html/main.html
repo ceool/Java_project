@@ -122,7 +122,7 @@
             date = '0' + String(date);
          var val = String(year) + String(month) + String(date);
 
-         price.innerHTML = '<iframe src="./Log/' + val + '_value.txt" style="border:0; height: 25px;" scrolling="no"></iframe>';
+         price.innerHTML = '<iframe src="./Log/' + val + '_present.txt" style="border:0; height: 25px;" scrolling="no"></iframe>';
          deposit.innerHTML = '<iframe src="/home/pi/Log/' + val + '_deposit.log" style="border:0; height: 22px;" scrolling="no"></iframe>';
          coin.innerHTML = '<iframe id="coin" src="/home/pi/Log/' + val + '_hold.log" style="border:0; height: 22px;" scrolling="no"></iframe>';
          buying.innerHTML = '<iframe class="list" src="/home/pi/Log/' + val + '_buying.log" style="background-color:AliceBlue;"></iframe>';
