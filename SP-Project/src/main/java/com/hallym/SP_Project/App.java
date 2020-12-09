@@ -19,7 +19,7 @@ public class App {
 
 		//매수의 격차 1*priDif
 		float priDif = (float) 0.003;
-		int money = 100000000; // 초기자금 1억
+		int money = 100000000; // 초기자금 1억원
 		float bitcoin = 0; // 초기 비트코인 0개
 
 		long total = 0; // 비트코인 현재가의 총합
