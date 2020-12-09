@@ -67,7 +67,7 @@ public class App {
 					closing_price = Integer.parseInt((String) jsonResult.getJSONObject("data").get("closing_price"));
 					//System.out.println(opening_price + ", " + closing_price);
 
-
+					
 					if(num >= 777)
 					{
 						if(chNum != 0)
@@ -99,6 +99,8 @@ public class App {
 						pre_open = opening_price;
 						total += pre_open;
 						chNum++;
+						
+						rl.present(path, pre_open); //현재가
 					}
 
 					//이전 가격과 매도가와 다르면
@@ -107,6 +109,8 @@ public class App {
 						pre_close = closing_price;
 						total += pre_close;
 						chNum++;
+						
+						rl.present(path, pre_close); //현재가
 					}
 
 
@@ -156,7 +160,7 @@ public class App {
 							System.out.println("소지금: " + money + ", 총 소유 비트코인 수: " + bitcoin);
 							System.out.printf("구매 평균 가격: %.1f\n", buyAvg);
 
-							rl.buyLog(path, money, bitcoin, low, bittmp, tmp, buyAvg, total);
+							rl.buyLog(path, money, bitcoin, low, bittmp, tmp, buyAvg);
 
 							led = new LED(3);
 							led.start();							
@@ -202,7 +206,7 @@ public class App {
 							System.out.println("판매가격: " + max + ", 판매 비트코인 수: " + bittmp + ", 총 판매금액: " + tmp);
 							System.out.println("소지금: " + money + ", 총 소유 비트코인 수: " + bitcoin);
 
-							rl.sellLog(path, money, bitcoin, max, bittmp, tmp, total);
+							rl.sellLog(path, money, bitcoin, max, bittmp, tmp);
 
 							led = new LED(1);
 							led.start();
