@@ -6,24 +6,24 @@ public class App {
 	public static void main(String[] args) {
 		RecordLog rl = new RecordLog(); //로그 객체
 		String path = "Log";
-		
+
 		LED led = new LED(2); // LED 객체
 		led.start();
-		
+
 		try {
 			led.join();
 		} catch (InterruptedException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
-		
+
 		//매수의 격차 1*priDif
 		float priDif = (float) 0.003;
 		int money = 100000000; // 초기자금 1억
 		float bitcoin = 0; // 초기 비트코인 0개
 
 		long total = 0; // 비트코인 현재가의 총합
-		int avg = 0; //최근 3분 동안의 평균 비트코인 가격
+		int avg = 0; //최근 777번 불러온 평균 비트코인 가격
 		int num = 0; //1800번 마다 토탈 계산
 		int chNum = 0; // 변한 가격 횟수
 		int buytotal = 0; // 매수했을 때 가격 총합
@@ -156,8 +156,8 @@ public class App {
 							System.out.println("소지금: " + money + ", 총 소유 비트코인 수: " + bitcoin);
 							System.out.printf("구매 평균 가격: %.1f\n", buyAvg);
 
-							rl.buyLog(path, money, bitcoin, low, bittmp, tmp, buyAvg);
-							
+							rl.buyLog(path, money, bitcoin, low, bittmp, tmp, buyAvg, total);
+
 							led = new LED(3);
 							led.start();							
 						}
@@ -202,11 +202,11 @@ public class App {
 							System.out.println("판매가격: " + max + ", 판매 비트코인 수: " + bittmp + ", 총 판매금액: " + tmp);
 							System.out.println("소지금: " + money + ", 총 소유 비트코인 수: " + bitcoin);
 
-							rl.sellLog(path, money, bitcoin, low, bittmp, tmp);
-							
+							rl.sellLog(path, money, bitcoin, max, bittmp, tmp, total);
+
 							led = new LED(1);
 							led.start();
-							
+
 							if(bitcoin < 0.01)
 							{
 								buytotal = 0;
