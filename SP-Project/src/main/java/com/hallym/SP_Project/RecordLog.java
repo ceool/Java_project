@@ -7,7 +7,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class RecordLog {
-	private static FileWriter writer = null; //파일 출력
+	private static FileWriter writer = null; //파일출력
 	private static FileWriter buywriter = null;
 	private static FileWriter sellwriter = null;
 	private static FileWriter depositwriter = null;
