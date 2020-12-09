@@ -36,7 +36,7 @@ public class App {
 		int pre_open = 0; //이전 매수 가격
 		int pre_close = 0; // 이전 매도 가격
 
-		//매수 매도 tmp값들
+		//매수 매도 tmp 값들
 		float bittmp, buytmp;
 		int low=0, max=0, tmp;
 
