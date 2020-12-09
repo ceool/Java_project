@@ -33,7 +33,7 @@ public class RecordLog {
 			dir.mkdirs();
 		}
 
-		valuefilePath = logPath + File.separator + ymd + "_present.log";
+		valuefilePath = logPath + File.separator + ymd + "_present.txt";
 		
 		try {
 			valuewriter = new FileWriter(valuefilePath);
