@@ -4,8 +4,8 @@
 <br>
 
 ### Spring Boot
-[Spring Boot](https://github.com/ceool/Java_project/tree/master/Spring%20boot) : 스프링 부트 공부
-
+[Spring Boot](https://github.com/ceool/Java_project/tree/master/Spring%20boot) : 스프링 부트 공부 (H2database로 User API 구축) <br>
+ - 자세한 사항은 해당 디렉토리 README.md 참고
 <br>
 
 ### 대학교 1학년 때 만든 자판기 머신
@@ -42,7 +42,8 @@
 
 ### 자료구조
 [Data_Structure](https://github.com/ceool/Java_project/tree/master/Data_Structure) : 깃허브에 처음 올린 파일, 현재는 레퍼지토리를 여기로 변경. (ArrayQueue, ArrayStack, linkedList, Thread)
-
+<br>
+ - 현재는 Queue, List, Stack 이외에도 다양한 알고리즘 기법 추가함.
 <br>
 
 ### 간단한 DB 연동
