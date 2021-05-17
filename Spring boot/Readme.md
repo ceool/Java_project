@@ -1,31 +1,32 @@
 ## 목차
 
-### [Web Service & Web Application](#Web-Service-&-Web-Application) <br>
+### [Web Service & Web Application](#0-web-service--web-application) <br>
+ - [Web Service](#web-service) <br>
  - [SOAP (Simple Object Access Protocol)](#SOAP-(Simple-Object-Access-Protocol)) <br>
  - [SOAP-ENV: Envelope](#SOAP-ENV-Envelope) <br>
- - [REST (REpresentational State Transfer)](#REST-(REpresentational-State-Transfer)) <br>
+ - [REST (REpresentational State Transfer)](#rest-representational-state-transfer) <br>
  - [RESTful](#RESTful) <br>
  - [SOAP vs REST](#SOAP-vs-REST) <br>
 
 ### [1. Spring Boot로 개발하는 RESTful Service](#1-Spring-Boot로-개발하는-RESTful-Service) <br>
  - [1.1 SprinBoot 개요](#11-SprinBoot-개요) <br>
  - [1.2 REST API 설계](#12-REST-API-설계) <br>
- - [1.3 Spring Boot Project 생성, 실행](#13-Spring-Boot-Project-생성,-실행) <br>
+ - [1.3 Spring Boot Project 생성, 실행](#13-spring-boot-project-생성-실행) <br>
  - [1.4 HelloWorld Controller 추가](#14-HelloWorld-Controller-추가) <br>
  - [1.5 HelloWorld Bean 추가](#15-HelloWorld-Bean-추가) <br>
- - [1.6 DispatcherServlet, 프로젝트 동작 이해하기](#16-DispatcherServlet,-프로젝트-동작-이해하기) <br>
+ - [1.6 DispatcherServlet, 프로젝트 동작 이해하기](#16-dispatcherservlet-프로젝트-동작-이해하기) <br>
  - [1.7 Path Variable](#17-Path-Variable) <br>
 
 ### [2. User Service API 추가](#2-User-Service-API-추가) <br>
  - [2.1 User Domain 생성](#21-User-Domain-생성) <br>
  - [2.2 GET](#22-GET) <br>
- - [2.3 POST (Status Code: 201)](#23-POST-(Status-Code-201)) <br>
+ - [2.3 POST (Status Code: 201)](#23-post-status-code-201) <br>
  - [2.4 Exception Handling](#24-Exception-Handling) <br>
  - [2.5 DELETE](#25-DELETE) <br>
 
 ### [3. RESTful Service 기능 확장](#3-RESTful-Service-기능-확장) <br>
- - [3.1 Validation (검증)](#31-Validation-(검증)) <br>
- - [3.2 Internationalization (국제화)](#32-Internationalization-(국제화)) <br>
+ - [3.1 Validation (검증)](#31-validation-검증) <br>
+ - [3.2 Internationalization (국제화)](#32-internationalization-국제화) <br>
  - [3.3 XML format으로 반환하기](#33-XML-format으로-반환하기) <br>
  - [3.4 Filtering](#34-Filtering) <br>
  - [3.5 Version 관리](#35-Version-관리) <br>
@@ -150,7 +151,7 @@ SQL
 
 
 
-## 1.6 DispatcherServlet, 프로젝트 동작 이해하기
+### 1.6 DispatcherServlet, 프로젝트 동작 이해하기
 
 - Spring Boot 동작원리
 ```
