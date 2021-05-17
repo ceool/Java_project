@@ -1,6 +1,6 @@
 ## 목차
 
-### [Web Service & Web Application](#0-web-service--web-application) <br>
+### [0. Web Service & Web Application](#0-web-service--web-application) <br>
  - [Web Service](#web-service) <br>
  - [SOAP (Simple Object Access Protocol)](#soap-simple-object-access-protocol) <br>
  - [SOAP-ENV: Envelope](#SOAP-ENV-Envelope) <br>
@@ -38,6 +38,8 @@
 ### [6. REST API 설계 가이드](#6-REST-API-설계-가이드) <br>
 
 
+<br>
+<br>
 
 ## 0. Web Service & Web Application
  - 네트워크 상에서 서로 다른 종류의 컴퓨터들 간에 상호작용하기 위한 소프트웨어 시스템 (HTML, JSON, XML, images)
@@ -387,6 +389,69 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 
 
 ### 3.2 Internationalization (국제화)
+#### @Configuration 등록
+ - LocaleResolver
+ - Default Locale (Locale.US or Locale.KOREA)
+ - ResourceBundleMessageSource
+#### Usage
+ - generate message budle files
+ - @Autowired MessageSource
+ - @RequestHeader(value = "Accept-Language", required = false)
+ - messageSource.getMessage("greeting.message", null, local)
+
+```
+# RestfulWebServiceApplication.java
+
+   @Bean
+    public LocaleResolver localeResolver() {
+       SessionLocaleResolver localeResolver = new SessionLocaleResolver();
+       localeResolver.setDefaultLocale(Locale.KOREA);
+
+       return localeResolver;
+   }
+```
+```
+# application.yml
+## 다국어 파일 이름을 messages로 지정
+
+spring:
+  messages:
+    basename: messages
+```
+
+```
+# messages.properties
+
+greeting.message=안녕하세요
+```
+
+```
+# messages_en.properties
+
+greeting.message=Hello
+```
+
+```
+# messages_fr.properties
+
+greeting.message=Bonjour
+```
+
+```
+# HelloWorldController.java
+
+    # 어노테이션 의존성 주입 추가
+    # 같은 타입을 가진 Bean을 자동으로 주입
+    @Autowired
+    private MessageSource messageSource;
+    
+    @GetMapping(path = "hello-world-internationalized")
+    public String helloWorldInternationalized(
+            @RequestHeader(name="Accept-Language", required = false) Locale locale) {
+
+        return messageSource.getMessage("greeting.message", null, locale);
+    }
+```
 ### 3.3 XML format으로 반환하기
 ### 3.4 Filtering
 ### 3.5 Version 관리
