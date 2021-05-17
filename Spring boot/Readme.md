@@ -1,5 +1,8 @@
 ## 목차
 
+> Spring boot 2.3.9.RELEASE <br>
+> Java 13.0.2
+
 ### [0. Web Service & Web Application](#0-web-service--web-application) <br>
  - [Web Service](#web-service) <br>
  - [SOAP (Simple Object Access Protocol)](#soap-simple-object-access-protocol) <br>
@@ -32,6 +35,10 @@
  - [3.5 Version 관리](#35-Version-관리) <br>
 
 ### [4. Spring Boot API 사용](#4-Spring-Boot-API-사용) <br>
+ - [4.1 REST API Level3을 위한 HATEOAS 설정](#41-REST-API-Level3을-위한-HATEOAS-설정) <br>
+ - [4.2 REST API Documentation을 위한 Swagger 설정](#42-REST-API-Documentation을-위한-Swagger-설정) <br>
+ - [4.3 REST API Monitoring을 위한 Actuator 설정](#43-REST-API-Monitoring을-위한-Actuator-설정) <br>
+ - [4.4 Spring Security](#44-Spring-Security) <br>
 
 ### [5. JPA 사용](#5-JPA-사용) <br>
 
@@ -110,11 +117,16 @@ SQL
  - H2 Database
 ```
 
+<br>
+
+
 ### 1.2 REST API 설계
 ### 1.3 Spring Boot Project 생성, 실행
 ```
  - resources - application.yml 파일 생성시, yml 기반으로 셋팅 가능
 ```
+
+<br>
 
 ### 1.4 HelloWorld Controller 추가
  - package com.example.restfulwebservice.helloworld, HelloWorldController.java
@@ -125,6 +137,9 @@ SQL
 @GetMapping(path = "/hello-world")
  - GET API 맵핑
 ```
+
+<br>
+
 
 ### 1.5 HelloWorld Bean 추가
 ```
@@ -152,10 +167,13 @@ SQL
 ```
 
 
+<br>
+
+
 
 ### 1.6 DispatcherServlet, 프로젝트 동작 이해하기
 
-- Spring Boot 동작원리
+#### Spring Boot 동작원리
 ```
 # application.yml
 # 설정이름: 값
@@ -178,7 +196,7 @@ Spring Boot 자동 구성(Auto Configuration)
 
 <br>
 
-DispatcherServlet
+#### DispatcherServlet
 
 ![사진3](https://user-images.githubusercontent.com/62891711/118434344-d9bb6580-b717-11eb-9101-dba83adbf9d3.png)
 
@@ -186,12 +204,18 @@ DispatcherServlet
 - 요청에 맞는 Handler로 요청을 전달
 - Handler의 실행 결과를 Http Response 형태로 만들어서 반환
 
+<br>
+
+
 ![사진4](https://user-images.githubusercontent.com/62891711/118434346-da53fc00-b717-11eb-9c50-43e9e6409bd9.png)
 
 - RestController
 - Spring4부터 @RestController 지원
 - @Controller + @ResponseBody
 - View를 갖지 않는 REST Data(JSON/XML)를 반환
+
+
+<br>
 
 
  ### 1.7 Path Variable
@@ -204,6 +228,9 @@ ex)
         return new HelloWorldBean(String.format("Hello World, %s", name));
     }
 ```
+
+<br>
+
 
 ## 2. User Service API 추가
 ![사진5](https://user-images.githubusercontent.com/62891711/118434962-ebe9d380-b718-11eb-8729-739ece71eb9d.png)
@@ -233,6 +260,9 @@ package com.example.restfulwebservice.user;
  - 비즈니스 로직이나 respository layer 호출하는 함수에 사용된다. 다른 어노테이션과 다르게 @Component에 추가된 기능은 없다. 하지만 나중에 Spring 측에서 추가적인 exception handling을 해줄 수도 있으니 비즈니스 로직에는 해당 어노테이션을 사용한다.
 ```
 
+<br>
+
+
 ### 2.2 GET
 ```
     @GetMapping("/users")
@@ -245,6 +275,9 @@ package com.example.restfulwebservice.user;
         User user = service.findOne(id);
     }
 ```
+
+<br>
+
 
 ### 2.3 POST (Status Code: 201)
 ```
@@ -260,6 +293,9 @@ package com.example.restfulwebservice.user;
         return ResponseEntity.created(location).build();
     }
 ```
+
+<br>
+
 
 ### 2.4 Exception Handling
  [Introduce Variable (Ctrl+Alt+V)]
@@ -321,6 +357,9 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
 ```
 
 
+<br>
+
+
 ### 2.5 DELETE
 ```
 # UserDaoService.java
@@ -352,6 +391,9 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         }
     }
 ```
+
+<br>
+
 
 ## 3. RESTful Service 기능 확장
 ### 3.1 Validation (검증)
@@ -386,6 +428,9 @@ public class CustomizedResponseEntityExceptionHandler extends ResponseEntityExce
         return new ResponseEntity(exceptionResponse, HttpStatus.BAD_REQUEST);
     }
 ```
+
+<br>
+
 
 
 ### 3.2 Internationalization (국제화)
@@ -452,13 +497,200 @@ greeting.message=Bonjour
         return messageSource.getMessage("greeting.message", null, locale);
     }
 ```
+
+<br>
+
+
 ### 3.3 XML format으로 반환하기
+```
+# pom.xml
+# 아래 디펜던시 추가
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.dataformat</groupId>
+            <artifactId>jackson-dataformat-xml</artifactId>
+            <version>2.11.4</version>
+        </dependency>
+```
+```
+# 디펜던시 추가후,
+# 아래와 같이 API를 호출하면 xml로 불러와짐.
+
+KEY : Accept
+VALUE : application/xml
+```
+
+<br>
+
 ### 3.4 Filtering
+ - 중요한 정보 필터링
+![사진6](https://user-images.githubusercontent.com/62891711/118440657-f315df00-b722-11eb-8d7b-af275f96b873.png)
+
+#### 사전준비
+```
+# User.java
+private String password;
+private String ssn;
+
+# UserDaoService.java (password,ssn 추가)
+users.add(new User(1, "ceool", new Date(), "pass1,", "701010-1111111")
+```
+
+<br>
+
+#### 방법1
+```
+# User.java
+## JsonIgnore만 추가해도 정보를 숨길 수 있음.
+    @JsonIgnore
+    private String password;
+    
+    @JsonIgnore
+    private String ssn;
+```
+
+#### 방법2
+```
+# User.java
+## class 위에서 어노테이션을 추가하여 필터링 가능
+
+@JsonIgnoreProperties(value = {"password", "ssn"})
+public class User {
+	...
+}
+```
+
+<br>
+
+
+#### 개별 사용자, 전체 사용자 불러오기 (AdminController)
+```
+# User.java
+## class 위에서 어노테이션을 추가
+
+@JsonFilter("UserInfo")
+public class User {
+	...
+}
+```
+```
+# AdminUserController.java
+
+    @GetMapping("/users")
+    public MappingJacksonValue retrieveAllUsers() {
+        List<User> users = service.findAll();
+
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
+                .filterOutAllExcept("id", "name", "joinDate", "password", "ssn");
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(users);
+        mapping.setFilters(filters);
+
+        return mapping;
+    }
+
+    @GetMapping(value = "/users/{id}")
+    public MappingJacksonValue retrieveUserV1(@PathVariable int id) {
+        User user = service.findOne(id);
+
+        if (user == null) {
+            throw new UserNotFoundException(String.format("ID[%s] not found", id));
+        }
+
+        SimpleBeanPropertyFilter filter = SimpleBeanPropertyFilter
+                .filterOutAllExcept("id", "name", "password", "ssn");
+        FilterProvider filters = new SimpleFilterProvider().addFilter("UserInfo", filter);
+
+        MappingJacksonValue mapping = new MappingJacksonValue(user);
+        mapping.setFilters(filters);
+
+        return mapping;
+    }
+```
+
+<br>
+
 ### 3.5 Version 관리
 
+![사진7](https://user-images.githubusercontent.com/62891711/118442392-80f2c980-b725-11eb-95d5-cc98d1227907.png)
 
 
+#### 기존 User 정보 상속하여 V2 만듦
+```
+#UserV2.java
+
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+@JsonFilter("UserInfoV2")
+public class UserV2 extends User {
+    private String grade;
+}
+```
+
+<br>
+
+#### 방법1: v1, v2를 직접 적음
+```
+# AdminUserController.java
+## 해당 파일 참고해서 작성 (v2는 grade가 추가됨.)
+
+@GetMapping("/v1/users/{id}")
+	...
+	
+@GetMapping("/v2/users/{id}")
+	...
+```
+
+#### 방법2: Request Parameter 이용
+
+```
+# AdminUserController.java
+
+@GetMapping(value = "/users/{id}/", params = "version=1")
+@GetMapping(value = "/users/{id}/", params = "version=2")
+
+ex) http://localhost:8088/admin/users/1/?version=2
+```
+
+#### 방법3: Header 이용
+```
+# AdminUserController.java
+
+@GetMapping(value = "/users/{id}", headers = "X-API-VERSION=1")
+@GetMapping(value = "/users/{id}", headers = "X-API-VERSION=2")
+
+ex)
+Headers
+ - KEY: X-API-VERSION
+ - VALUE : 2
+http://localhost:8088/admin/users/1
+```
+
+#### 방법4:produces 사용
+```
+# AdminUserController.java
+
+@GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv1+json")
+@GetMapping(value = "/users/{id}", produces = "application/vnd.company.appv2+json")
+
+ex)
+Headers
+ - KEY: Accept
+ - VALUE : application/vnd.company.appv2+json
+http://localhost:8088/admin/users/1
+```
+
+![사진8](https://user-images.githubusercontent.com/62891711/118444981-cf559780-b728-11eb-911c-04dd8d17fe84.png)
+
+<br>
 
 ## 4. Spring Boot API 사용
+### 4.1 REST API Level3을 위한 HATEOAS 설정
+### 4.2 REST API Documentation을 위한 Swagger 설정
+### 4.3 REST API Monitoring을 위한 Actuator 설정
+### 4.4 Spring Security
+
 ## 5. JPA 사용
 ## 6. REST API 설계 가이드
