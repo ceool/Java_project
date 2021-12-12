@@ -1,0 +1,14 @@
+spring:
+  profiles:
+    active: local
+  mvc:
+    view:
+      prefix: /WEB-INF/views/
+      suffix: .jsp
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: mybatis/mappers/*.xml
+  type-aliases-package: com.joonhyun.webproject.dao.vo
+
