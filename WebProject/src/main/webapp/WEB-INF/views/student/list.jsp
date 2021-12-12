@@ -23,7 +23,8 @@
 </head>
 <body>
 
-<div>총 게시글 개수 : ${pagination.listCnt}</div>
+<div>총 게시글 개수 : ${pagination.listCnt}</div><br>
+<div><a href="/student/add"><button>등록</button></a></div>
 <table>
 	<thead>
 		<th>학생코드</th>

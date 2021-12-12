@@ -3,6 +3,7 @@ package com.joonhyun.webproject.dao;
 import com.joonhyun.webproject.dao.vo.StudentVo;
 import com.joonhyun.webproject.util.Pagination;
 import java.util.List;
+import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
@@ -16,6 +17,13 @@ public interface StudentDao {
 	 * @return
 	 */
 	List<StudentVo> selectStudentList(@Param("pagination") Pagination pagination);
+
+	/**
+	 * 학생 등록
+	 *
+	 * @param studentMap
+	 */
+	void insertStudent(Map<String, Object> studentMap);
 
 	/**
 	 * 학생 테이블 카운트 조회

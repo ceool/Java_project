@@ -1,6 +1,5 @@
 package com.joonhyun.webproject.dao.vo;
 
-import java.time.LocalDateTime;
 import java.util.Date;
 import lombok.Getter;
 

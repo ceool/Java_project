@@ -10,6 +10,18 @@
 		LIMIT #{pagination.startIndex}, #{pagination.pageSize}
 	</select>
 
+	<insert id="insertStudent" parameterType="com.joonhyun.webproject.dao.vo.StudentVo">
+		INSERT INTO apply_student (
+					student_code, interview_group_code, name, gender, birth
+				  , pass_yn, entrance_yn, friendship_yn, friendship_description
+				  , create_date, update_date
+		) VALUES (
+				    #{studentCode}, #{interviewGroupCode}, #{name}, #{gender}, #{birth}
+		    	  , #{passYn}, #{entranceYn}, #{friendshipYn}, #{friendshipDescription}
+				  , sysdate(), sysdate()
+		)
+	</insert>
+
 	<select id="selectStudentCount" resultType="java.lang.Integer">
 		SELECT COUNT(a.student_code) FROM apply_student a
 	</select>
