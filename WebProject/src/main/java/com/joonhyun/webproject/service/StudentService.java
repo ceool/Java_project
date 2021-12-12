@@ -8,6 +8,8 @@ import java.util.Map;
 public interface StudentService {
 
 	List<StudentVo> getStudentList(Pagination pagination);
+
 	void addStudent(Map<String, Object> studentMap);
+
 	Integer getStudentCount();
 }

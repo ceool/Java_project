@@ -8,6 +8,7 @@ public class StudentVo {
 
 	private String studentCode;
 	private String interviewGroupCode;
+	private String interviewGroupName;
 	private String name;
 	private String gender;
 	private String birth;

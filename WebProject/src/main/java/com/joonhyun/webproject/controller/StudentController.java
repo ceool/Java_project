@@ -42,22 +42,31 @@ public class StudentController {
 
 		Pagination pagination = new Pagination(studentService.getStudentCount(), curPage);
 		List<StudentVo> studentList = studentService.getStudentList(pagination);
-		for(StudentVo student : studentList) {
-			System.out.println(student.getName());
 
-		}
 		model.addAttribute("studentList", studentList);
 		model.addAttribute("pagination", pagination);
 
 		return "/student/list";
 	}
 
+	/**
+	 * 학생 등록 페이지
+	 *
+	 * @return
+	 */
 	@GetMapping("/add")
 	public String StudentAdd() {
 
 		return "/student/add";
 	}
 
+	/**
+	 * 학생 등록 Exec
+	 *
+	 * @param studentMap
+	 * @param model
+	 * @return
+	 */
 	@PostMapping("/add-exec")
 	public String StudentAddExec(@RequestParam Map<String, Object> studentMap, Model model) {
 
