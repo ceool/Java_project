@@ -27,10 +27,8 @@
 <div><a href="/student/add"><button>등록</button></a></div>
 <table>
 	<thead>
-		<th>학생코드</th>
-		<th>면접그룹코드</th>
-		<th>면접그룹이름</th>
 		<th>이름</th>
+		<th>면접그룹이름</th>
 		<th>성별</th>
 		<th>생년월일</th>
 		<th>합격여부</th>
@@ -39,16 +37,16 @@
 		<th>교수 친분 설명</th>
 		<th>생성일</th>
 		<th>수정일</th>
+		<th>수정 버튼</th>
 	</thead>
 	<tbody>
 <c:choose>
 	<c:when test="${not empty studentList}">
 		<c:forEach var="list" items="${studentList}">
 			<tr>
-				<td>${list.studentCode}</td>
-				<td>${list.interviewGroupCode}</td>
-				<td>${list.interviewGroupName}</td>
+<%--				<td>${list.interviewGroupCode}</td>--%>
 				<td>${list.name}</td>
+				<td>${list.interviewGroupName}</td>
 				<td>${list.gender}</td>
 				<td>${list.birth}</td>
 				<td>${list.passYn}</td>
@@ -57,6 +55,7 @@
 				<td>${list.friendshipDescription}</td>
 				<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.createDate}" /></td>
 				<td><fmt:formatDate pattern="yyyy-MM-dd HH:mm:ss" value="${list.updateDate}" /></td>
+				<td><a href="/student/modify/${list.studentCode}"><button>수정</button></a></td>
 			</tr>
 		</c:forEach>
 	</c:when>

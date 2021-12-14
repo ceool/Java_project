@@ -24,6 +24,17 @@ public class StudentServiceImpl implements StudentService {
 	private final StudentDao studentDao;
 
 	/**
+	 * 학생 조회
+	 *
+	 * @param studentCode
+	 * @return
+	 */
+	@Override
+	public StudentVo getStudent(String studentCode) {
+		return studentDao.selectStudent(studentCode);
+	}
+
+	/**
 	 * 학생 리스트 조회
 	 *
 	 * @param pagination
@@ -42,6 +53,26 @@ public class StudentServiceImpl implements StudentService {
 	@Override
 	public void addStudent(Map<String, Object> studentMap) {
 		studentDao.insertStudent(studentMap);
+	}
+
+	/**
+	 * 학생 수정
+	 *
+	 * @param studentMap
+	 */
+	@Override
+	public void modifyStudent(Map<String, Object> studentMap) {
+		studentDao.updateStudent(studentMap);
+	}
+
+	/**
+	 * 학생 삭제
+	 *
+	 * @param studentCode
+	 */
+	@Override
+	public void removeStudent(String studentCode) {
+		studentDao.deleteStudent(studentCode);
 	}
 
 	/**

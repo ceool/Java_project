@@ -12,9 +12,15 @@ import java.util.Map;
  */
 public interface StudentService {
 
+	StudentVo getStudent(String studentCode);
+
 	List<StudentVo> getStudentList(Pagination pagination);
 
 	void addStudent(Map<String, Object> studentMap);
+
+	void modifyStudent(Map<String, Object> studentMap);
+
+	void removeStudent(String studentCode);
 
 	Integer getStudentCount();
 }

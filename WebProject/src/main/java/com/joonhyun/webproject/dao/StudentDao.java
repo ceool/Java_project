@@ -16,6 +16,14 @@ import org.apache.ibatis.annotations.Param;
 public interface StudentDao {
 
 	/**
+	 * 학생 조회
+	 *
+	 * @param studentCode
+	 * @return
+	 */
+	StudentVo selectStudent(String studentCode);
+
+	/**
 	 * 학생 리스트 조회
 	 *
 	 * @param pagination
@@ -29,6 +37,20 @@ public interface StudentDao {
 	 * @param studentMap
 	 */
 	void insertStudent(Map<String, Object> studentMap);
+
+	/**
+	 * 학생 수정
+	 *
+	 * @param studentMap
+	 */
+	void updateStudent(Map<String, Object> studentMap);
+
+	/**
+	 * 학생 삭제
+	 *
+	 * @param studentCode
+	 */
+	void deleteStudent(String studentCode);
 
 	/**
 	 * 학생 테이블 카운트 조회

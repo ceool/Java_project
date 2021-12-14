@@ -5,6 +5,13 @@
 <mapper namespace="com.joonhyun.webproject.dao.StudentDao">
 
 	<!-- 학생 리스트 조회 -->
+	<select id="selectStudent" resultType="com.joonhyun.webproject.dao.vo.StudentVo">
+		SELECT a.*
+		FROM apply_student a
+		WHERE a.student_code = #{studentCode}
+	</select>
+
+	<!-- 학생 리스트 조회 -->
 	<select id="selectStudentList" resultType="com.joonhyun.webproject.dao.vo.StudentVo">
 		SELECT a.*
 			 , IFNULL(b.interview_group_name, '에러 발생, 관리자에게 문의하세요.') as interviewGroupName
@@ -27,6 +34,27 @@
 				  , sysdate(), sysdate()
 		)
 	</insert>
+
+	<!-- 학생 수정 -->
+	<update id="updateStudent" parameterType="com.joonhyun.webproject.dao.vo.StudentVo">
+		UPDATE apply_student SET interview_group_code = #{interviewGroupCode}
+		                       , name = #{name}
+		                       , gender = #{gender}
+		                       , birth = #{birth}
+		                       , pass_yn = #{passYn}
+		                       , entrance_yn = #{entranceYn}
+		                       , friendship_yn = #{friendshipYn}
+		                       , friendship_description = #{friendshipDescription}
+		                       , update_date = sysdate()
+		 WHERE student_code = #{studentCode}
+	</update>
+
+	<!-- 학생 삭제 -->
+	<delete id="deleteStudent" parameterType="com.joonhyun.webproject.dao.vo.StudentVo">
+		DELETE
+		FROM apply_student
+		WHERE student_code = #{studentCode}
+	</delete>
 
 	<!-- 학생 리스트 카운트 -->
 	<select id="selectStudentCount" resultType="java.lang.Integer">
