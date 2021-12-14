@@ -116,11 +116,14 @@ public class StudentController {
 		} catch (Exception e) {
 			log.error("[학생 등록 오류]", e);
 			model.addAttribute("status", "error");
-			model.addAttribute("message", "등록에 실패하였습니다. 학생코드가 중복됩니다.");
+			model.addAttribute("message", "등록에 실패하였습니다. 학생코드가 중복됩니다. 리스트 화면으로 돌아갑니다.");
 			return "/student/add";
 		}
 
-		return "redirect:/student/list";
+		model.addAttribute("status", "error");
+		model.addAttribute("message", "등록에 성공하였습니다. 리스트 화면으로 돌아갑니다.");
+
+		return "/student/add";
 	}
 
 	/**
@@ -142,7 +145,10 @@ public class StudentController {
 			return "/student/modify";
 		}
 
-		return "redirect:/student/list";
+		model.addAttribute("status", "success");
+		model.addAttribute("message", "수정에 성공하였습니다. 리스트 화면으로 돌아갑니다.");
+
+		return "/student/modify";
 	}
 
 	/**

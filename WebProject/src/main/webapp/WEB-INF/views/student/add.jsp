@@ -5,7 +5,7 @@
   Time: 오후 8:39
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="../import/importList.jsp" %>
 
 <html>
@@ -107,12 +107,13 @@
 </form>
 <script>
 
-  // 등록에 성공하면 '/student/list'로 이동, 실패시 에러 메시지 표시
+  // 등록 및 실패 여부 알림
   let status = "${status}"
   let message = "${message}"
 
-  if (status == "error") {
+  if (status == "error" || status == "success") {
     alert(message);
+    window.location.href = '/student/list';
   }
 </script>
 </body>

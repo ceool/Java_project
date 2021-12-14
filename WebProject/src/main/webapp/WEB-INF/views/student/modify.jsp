@@ -5,7 +5,7 @@
   Time: 오후 3:46
   To change this template use File | Settings | File Templates.
 --%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ include file="../import/importList.jsp" %>
 
 <html>
@@ -157,16 +157,11 @@
 </form>
 <script>
 
-  // 변경 실패시 에러 메시지 표시
+  // 수정 및 삭제 여부 알림
   let status = "${status}"
   let message = "${message}"
 
-  if (status == "error") {
-    alert(message);
-    window.location.href = '/student/list';
-  }
-
-  if (status == "success") {
+  if (status == "error" || status == "success") {
     alert(message);
     window.location.href = '/student/list';
   }

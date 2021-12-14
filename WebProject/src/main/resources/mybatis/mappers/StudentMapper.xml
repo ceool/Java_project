@@ -4,7 +4,7 @@
 <!-- DAO Name Space -->
 <mapper namespace="com.joonhyun.webproject.dao.StudentDao">
 
-	<!-- 학생 리스트 조회 -->
+	<!-- 학생 조회 -->
 	<select id="selectStudent" resultType="com.joonhyun.webproject.dao.vo.StudentVo">
 		SELECT a.*
 		FROM apply_student a

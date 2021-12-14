@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- DAO Name Space -->
+<mapper namespace="com.joonhyun.webproject.dao.ProfessorDao">
+
+	<!-- 교수 리스트 조회 -->
+	<select id="selectProfessorList" resultType="com.joonhyun.webproject.dao.vo.ProfessorVo">
+		SELECT a.*
+			 , b.professor_room_name
+		FROM professor a
+			INNER JOIN professor_room b
+				on a.room_code = b.professor_room_code
+		ORDER BY create_date DESC
+			LIMIT #{pagination.startIndex}, #{pagination.pageSize}
+	</select>
+
+	<!-- 교수 리스트 카운트 -->
+	<select id="selectProfessorCount" resultType="java.lang.Integer">
+		SELECT COUNT(a.professor_code) FROM professor a
+	</select>
+</mapper>
