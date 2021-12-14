@@ -6,10 +6,19 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ include file="../import/importList.jsp" %>
 
 <html>
 <head>
 	<title>학생 등록</title>
+	<style>
+      table {
+        border: 1px solid #444444;
+      }
+      th{
+        text-align: left;
+      }
+	</style>
 </head>
 <body>
 <form method='post' action="/student/add-exec">
@@ -22,9 +31,14 @@
 			</td>
 		</tr>
 		<tr>
-			<th>면접그룹코드</th>
+			<th>면접그룹</th>
 			<td>
-				<input type='text' name="interviewGroupCode" maxlength='32' required/>
+				<select name="interviewGroupCode" required>
+					<option value="">선택해주세요.</option>
+					<c:forEach var="interviewGroup" items="${interviewGroupList}">
+						<option value="${interviewGroup.interviewGroupCode}">${interviewGroup.interviewGroupName}</option>
+					</c:forEach>
+				</select>
 			</td>
 		</tr>
 		<tr>

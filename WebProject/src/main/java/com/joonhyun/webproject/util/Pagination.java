@@ -3,6 +3,12 @@ package com.joonhyun.webproject.util;
 import lombok.Getter;
 import lombok.Setter;
 
+
+/**
+ * 페이징 처리
+ *
+ * @author 20165315 박준현
+ */
 @Getter
 @Setter
 public class Pagination {

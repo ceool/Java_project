@@ -1,6 +1,8 @@
 package com.joonhyun.webproject.controller;
 
+import com.joonhyun.webproject.dao.vo.InterviewGroupVo;
 import com.joonhyun.webproject.dao.vo.StudentVo;
+import com.joonhyun.webproject.service.impl.InterviewGroupServiceImpl;
 import com.joonhyun.webproject.service.impl.StudentServiceImpl;
 import com.joonhyun.webproject.util.Pagination;
 import java.util.List;
@@ -15,6 +17,12 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+
+/**
+ * 학생 Controller
+ *
+ * @author 20165315 박준현
+ */
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -26,6 +34,10 @@ public class StudentController {
 	 */
 	private final StudentServiceImpl studentService;
 
+	/**
+	 * InterviewGroupService
+	 */
+	private final InterviewGroupServiceImpl interviewGroupService;
 
 	/**
 	 * 학생 리스트 조회
@@ -41,6 +53,7 @@ public class StudentController {
 		@RequestParam(defaultValue = "1") int curPage, Model model) throws Exception {
 
 		Pagination pagination = new Pagination(studentService.getStudentCount(), curPage);
+
 		List<StudentVo> studentList = studentService.getStudentList(pagination);
 
 		model.addAttribute("studentList", studentList);
@@ -55,8 +68,13 @@ public class StudentController {
 	 * @return
 	 */
 	@GetMapping("/add")
-	public String StudentAdd() {
-
+	public String StudentAdd(Model model) {
+		try {
+			List<InterviewGroupVo> interviewGroupList = interviewGroupService.getInterviewGroupList();
+			model.addAttribute("interviewGroupList", interviewGroupList);
+		} catch (Exception e) {
+			log.error("[/student/add 오류]", e);
+		}
 		return "/student/add";
 	}
 

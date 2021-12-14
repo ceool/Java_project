@@ -7,6 +7,11 @@ import java.util.Map;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+/**
+ * 학생 Dao 맵퍼
+ *
+ * @author 20165315 박준현
+ */
 @Mapper
 public interface StudentDao {
 

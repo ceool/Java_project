@@ -9,6 +9,11 @@ import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+/**
+ * 학생 ServiceImpl
+ *
+ * @author 20165315 박준현
+ */
 @Service
 @RequiredArgsConstructor
 public class StudentServiceImpl implements StudentService {
