@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- DAO Name Space -->
+<mapper namespace="com.joonhyun.webproject.dao.InterviewDao">
+
+	<!-- 인터뷰그룹 리스트 조회 -->
+	<select id="selectInterviewGroupList" resultType="com.joonhyun.webproject.dao.vo.InterviewGroupVo">
+		SELECT a.interview_group_code
+			  ,a.interview_group_name
+			  ,a.create_date
+			  ,a.update_date
+		FROM interview_group a;
+	</select>
+
+	<!-- 인터뷰 상세 리스트 조회 -->
+	<select id="selectInterviewDetailList" resultType="com.joonhyun.webproject.dao.vo.InterviewDetailVo">
+		SELECT a.interview_group_code
+			 , a.interview_group_name
+			 , c.name
+			 , c.gender
+			 , d.professor_room_name
+		FROM interview_group a
+			 LEFT JOIN attend_interview b
+				   ON a.interview_group_code = b.interview_group_code
+			 INNER JOIN professor c
+					ON b.professor_code = c.professor_code
+			 LEFT JOIN professor_room d
+				   ON c.room_code = d.professor_room_code
+		ORDER BY a.interview_group_code ASC, c.name ASC
+	</select>
+</mapper>

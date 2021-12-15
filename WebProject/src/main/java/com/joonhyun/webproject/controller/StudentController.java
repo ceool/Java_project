@@ -2,7 +2,7 @@ package com.joonhyun.webproject.controller;
 
 import com.joonhyun.webproject.dao.vo.InterviewGroupVo;
 import com.joonhyun.webproject.dao.vo.StudentVo;
-import com.joonhyun.webproject.service.impl.InterviewGroupServiceImpl;
+import com.joonhyun.webproject.service.impl.InterviewServiceImpl;
 import com.joonhyun.webproject.service.impl.StudentServiceImpl;
 import com.joonhyun.webproject.util.Pagination;
 import java.util.List;
@@ -36,9 +36,9 @@ public class StudentController {
 	private final StudentServiceImpl studentService;
 
 	/**
-	 * InterviewGroupService
+	 * InterviewServiceImpl
 	 */
-	private final InterviewGroupServiceImpl interviewGroupService;
+	private final InterviewServiceImpl interviewService;
 
 	/**
 	 * 학생 리스트 조회
@@ -71,7 +71,7 @@ public class StudentController {
 	@GetMapping("/add")
 	public String StudentAdd(Model model) {
 		try {
-			List<InterviewGroupVo> interviewGroupList = interviewGroupService.getInterviewGroupList();
+			List<InterviewGroupVo> interviewGroupList = interviewService.getInterviewGroupList();
 			model.addAttribute("interviewGroupList", interviewGroupList);
 		} catch (Exception e) {
 			log.error("[/student/add GET 오류]", e);
@@ -90,7 +90,7 @@ public class StudentController {
 	public String StudentModify(Model model, @PathVariable String studentCode) {
 		try {
 			StudentVo studentVo = studentService.getStudent(studentCode);
-			List<InterviewGroupVo> interviewGroupList = interviewGroupService.getInterviewGroupList();
+			List<InterviewGroupVo> interviewGroupList = interviewService.getInterviewGroupList();
 
 			model.addAttribute("studentVo", studentVo);
 			model.addAttribute("interviewGroupList", interviewGroupList);

@@ -27,6 +27,7 @@
 <div><a href="/student/add"><button>등록</button></a></div>
 <table>
 	<thead>
+		<th>학생코드</th>
 		<th>이름</th>
 		<th>면접그룹이름</th>
 		<th>성별</th>
@@ -45,6 +46,7 @@
 		<c:forEach var="list" items="${studentList}">
 			<tr>
 <%--				<td>${list.interviewGroupCode}</td>--%>
+				<td>${list.studentCode}</td>
 				<td>${list.name}</td>
 				<td>${list.interviewGroupName}</td>
 				<td>${list.gender}</td>
