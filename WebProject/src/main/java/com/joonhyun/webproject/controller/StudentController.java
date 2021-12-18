@@ -127,7 +127,7 @@ public class StudentController {
 	}
 
 	/**
-	 * 학생 등록 Exec
+	 * 학생 수정 Exec
 	 *
 	 * @param studentMap
 	 * @param model
