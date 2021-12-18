@@ -1,5 +1,6 @@
 package com.joonhyun.webproject.dao;
 
+import com.joonhyun.webproject.dao.vo.RequestStudentVo;
 import com.joonhyun.webproject.dao.vo.StudentVo;
 import com.joonhyun.webproject.util.Pagination;
 import java.util.List;
@@ -26,10 +27,19 @@ public interface StudentDao {
 	/**
 	 * 학생 리스트 조회
 	 *
+	 * @param entranceYn
 	 * @param pagination
 	 * @return
 	 */
-	List<StudentVo> selectStudentList(@Param("pagination") Pagination pagination);
+	List<StudentVo> selectStudentList(@Param("entranceYn") String entranceYn,
+		@Param("pagination") Pagination pagination);
+
+	/**
+	 * 청탁학생 리스트 조회
+	 *
+	 * @return
+	 */
+	List<RequestStudentVo> selectRequestStudentList();
 
 	/**
 	 * 학생 등록

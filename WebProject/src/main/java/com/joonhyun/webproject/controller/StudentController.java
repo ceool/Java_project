@@ -55,7 +55,7 @@ public class StudentController {
 
 		Pagination pagination = new Pagination(studentService.getStudentCount(), curPage);
 
-		List<StudentVo> studentList = studentService.getStudentList(pagination);
+		List<StudentVo> studentList = studentService.getStudentList("", pagination);
 
 		model.addAttribute("studentList", studentList);
 		model.addAttribute("pagination", pagination);

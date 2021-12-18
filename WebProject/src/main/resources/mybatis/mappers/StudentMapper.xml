@@ -4,6 +4,20 @@
 <!-- DAO Name Space -->
 <mapper namespace="com.joonhyun.webproject.dao.StudentDao">
 
+	<!-- 검색 조건 -->
+	<sql id="searchCondition">
+		<choose>
+			<when test='entranceYn != "" and entranceYn != null'>
+				WHERE entrance_yn = #{entranceYn}
+				ORDER BY create_date DESC
+			</when>
+			<when test='entranceYn == "" or entranceYn == null'>
+				ORDER BY create_date DESC
+				LIMIT #{pagination.startIndex}, #{pagination.pageSize}
+			</when>
+		</choose>
+	</sql>
+
 	<!-- 학생 조회 -->
 	<select id="selectStudent" resultType="com.joonhyun.webproject.dao.vo.StudentVo">
 		SELECT a.*
@@ -18,8 +32,32 @@
 		FROM apply_student a
 			LEFT JOIN interview_group b
 				on a.interview_group_code = b.interview_group_code
-		ORDER BY create_date DESC
-		LIMIT #{pagination.startIndex}, #{pagination.pageSize}
+		<include refid="searchCondition"/>
+	</select>
+
+	<!-- 청탁학생 리스트 조회 -->
+	<select id="selectRequestStudentList" resultType="com.joonhyun.webproject.dao.vo.RequestStudentVo">
+		SELECT a.student_code
+		     , a.name
+			 , b.interview_group_name
+			 , a.gender
+			 , a.friendship_yn
+			 , a.friendship_description
+			 , CASE
+				   WHEN vl.student_code is not null and vl.room_code is not null THEN '3'
+				   WHEN vl.name is not null and vl.room_code is not null THEN '2'
+				   WHEN vl.name is not null THEN '1'
+				   WHEN a.friendship_yn = 'Y' THEN '1'
+				   ELSE '0'
+			   END as request
+			 , a.create_date
+		FROM apply_student a
+			 LEFT JOIN interview_group b
+				   on b.interview_group_code = a.interview_group_code
+			 LEFT JOIN visit_log vl
+				   on a.birth = vl.birth and a.name = vl.name
+		WHERE entrance_yn = 'Y'
+		ORDER BY a.create_date DESC, request desc
 	</select>
 
 	<!-- 학생 등록 -->

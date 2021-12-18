@@ -1,9 +1,11 @@
 package com.joonhyun.webproject.service.impl;
 
 import com.joonhyun.webproject.dao.StudentDao;
+import com.joonhyun.webproject.dao.vo.RequestStudentVo;
 import com.joonhyun.webproject.dao.vo.StudentVo;
 import com.joonhyun.webproject.service.StudentService;
 import com.joonhyun.webproject.util.Pagination;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import lombok.RequiredArgsConstructor;
@@ -41,8 +43,32 @@ public class StudentServiceImpl implements StudentService {
 	 * @return
 	 */
 	@Override
-	public List<StudentVo> getStudentList(Pagination pagination) {
-		return studentDao.selectStudentList(pagination);
+	public List<StudentVo> getStudentList(String entranceYn, Pagination pagination) {
+		return studentDao.selectStudentList(entranceYn, pagination);
+	}
+
+	/**
+	 * 청탁 학생 리스트 조회
+	 *
+	 * @return
+	 */
+	@Override
+	public List<RequestStudentVo> getRequestStudentList() {
+		List<RequestStudentVo> requestStudentList = studentDao.selectRequestStudentList();
+
+		// 중복제거
+		// left join으로 방문자가 중복일 경우, 청탁학생 -> 청탁의심 -> 청탁주의 -> 대상아님 우선순위로 저장
+		List<RequestStudentVo> newStudentList = new ArrayList<>();
+
+		String studentCode = null;
+		for(RequestStudentVo requestStudentVo : requestStudentList) {
+			if(!requestStudentVo.getStudentCode().equals(studentCode)) {
+				newStudentList.add(requestStudentVo);
+			}
+			studentCode = requestStudentVo.getStudentCode();
+		}
+
+		return newStudentList;
 	}
 
 	/**

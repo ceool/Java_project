@@ -1,5 +1,6 @@
 package com.joonhyun.webproject.service;
 
+import com.joonhyun.webproject.dao.vo.RequestStudentVo;
 import com.joonhyun.webproject.dao.vo.StudentVo;
 import com.joonhyun.webproject.util.Pagination;
 import java.util.List;
@@ -14,7 +15,9 @@ public interface StudentService {
 
 	StudentVo getStudent(String studentCode);
 
-	List<StudentVo> getStudentList(Pagination pagination);
+	List<StudentVo> getStudentList(String entranceYn, Pagination pagination);
+
+	List<RequestStudentVo> getRequestStudentList();
 
 	void addStudent(Map<String, Object> studentMap);
 
